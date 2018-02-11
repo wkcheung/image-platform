@@ -1,0 +1,21 @@
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import App from './src/components/App'
+
+import './semantic/dist/semantic.min.css';
+
+// let store = createStore(todoApp)
+
+// render(
+  // <Provider store={store}>
+    // <App />
+  // </Provider>,
+  // document.getElementById('root')
+// )
+
+render(
+  <App />,
+  document.getElementById('root')
+)

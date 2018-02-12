@@ -23,3 +23,10 @@ export const toggleTodo = id => {
     id
   }
 }
+
+const uppyStateUpdate = (previous, next, patch) => ({
+  type: 'UPPY_STATE_UPDATE',
+  previous,
+  next,
+  patch
+})

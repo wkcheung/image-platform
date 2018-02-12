@@ -4,7 +4,8 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import App from './src/components/App'
 
-import './semantic/dist/semantic.min.css';
+import './lib/dropzonejs/dropzone.min.css'
+import './lib/semantic/dist/semantic.min.css'
 import './src/assets/css/global.css'
 
 // let store = createStore(todoApp)

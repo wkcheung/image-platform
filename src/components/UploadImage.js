@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Divider, Form, Grid, Header, Image, Input, Modal } from 'semantic-ui-react'
 
-// temp
-import logo from '../assets/images/logo.svg';
 
+// temp
 const collections = [
   { text: 'Animals', value: 'userName.Animals' },
-  { text: 'Cars', value: 'userName.Cars' },
-]
+  { text: 'Vehicles', value: 'userName.Vehicles' },
+];
+
+const UploadImageArea = props => {
+	return (
+		<form formAction={console.log('hi')}
+		className="dropzone"
+		id="my-awesome-dropzone"></form>
+	);
+}
 
 const UploadImageForm = props => {
   return (
@@ -16,6 +23,7 @@ const UploadImageForm = props => {
       <Grid columns={2} divided>
         <Grid.Row>
           <Grid.Column>
+			
           </Grid.Column>
           <Grid.Column>
             <Form.Field>
@@ -52,7 +60,7 @@ const UploadImageModal = props => {
     <Modal.Header>Select a Photo</Modal.Header>
     <Modal.Content>
       <Modal.Description>
-        <UploadImageForm />
+        <UploadImageForm {...props} />
       </Modal.Description>
     </Modal.Content>
   </Modal>

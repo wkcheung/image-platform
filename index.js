@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import App from './src/components/App'
 
 import './semantic/dist/semantic.min.css';
+import './src/assets/css/global.css'
 
 // let store = createStore(todoApp)
 

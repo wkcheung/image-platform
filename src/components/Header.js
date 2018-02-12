@@ -1,46 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Input, Menu } from 'semantic-ui-react'
+import { Icon, Input, Menu, Segment } from 'semantic-ui-react'
+import logo from '../assets/images/logo.svg';
 
-const LoggedOutView = props => {
-	if (!props.currentUser) {
-		return (
-			<Menu.Item name="login" active={true}>
-				Sign in
-			</Menu.Item>
-		);
-	}
-	return null;
-}
-
-const LoggedInView = props => {
-	if (props.currentUser) {
-		return (
-			<Menu.Item name="login" active={true}>
-				Sign out
-			</Menu.Item>
-		);
-	}
-	return null;
-}
-
-
-class Header extends React.Component {
+class Header extends Component {
   render() {
     return (
-		<Menu secondary>
-			<Menu.Menu position='right'>
+			<Segment className="padding-t-4 padding-b-4">
+				<Menu secondary>
 				<Menu.Item>
-					<Input icon='search' placeholder='Search...' />
+					<img src={logo} />
 				</Menu.Item>
-				
-				<LoggedOutView currentUser={this.props.currentUser} />
-
-				<LoggedInView currentUser={this.props.currentUser} />
-			</Menu.Menu>
-		</Menu>
+					<Menu.Menu position='right'>
+						<Menu.Item>
+							<Input icon='search' placeholder='Search...' />
+						</Menu.Item>
+						<Menu.Item>
+							Log out
+						</Menu.Item>
+					</Menu.Menu>
+				</Menu>
+			</Segment>
     );
   }
 }
 
-export default Header;
+export default Header

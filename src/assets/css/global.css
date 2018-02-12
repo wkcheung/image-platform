@@ -1,0 +1,13 @@
+.padding-t-4 {
+  padding-top: 4px !important;
+}
+
+.padding-b-4 {
+  padding-bottom: 4px !important;
+}
+
+.upload-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

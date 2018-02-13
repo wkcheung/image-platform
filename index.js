@@ -30,7 +30,9 @@ import './src/assets/css/global.css';
 // ), document.getElementById('root'));
 
 ReactDOM.render((
-  <Router path = "/" history={ browserHistory }>
-    <Route path="/app" component={ App } />
-  </Router>
+  <Provider store={store}>
+    <Router history={ browserHistory }>
+      <Route path="/" component={ App } />
+    </Router>
+  </Provider>
 ), document.getElementById('root'));

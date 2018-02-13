@@ -29,7 +29,7 @@ class SignIn extends Component {
     return (
       <Grid centered columns={3}>
         <Grid.Column>
-          <SignInForm />
+          <SignInForm {...props} />
         </Grid.Column>
       </Grid>
     );

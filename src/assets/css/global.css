@@ -6,6 +6,18 @@
   padding-bottom: 4px !important;
 }
 
+.fixed-center {
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+.sign-in-sign-up-segment {
+  width: 420px;
+  min-height: 500px;
+}
+
 .upload-button {
   position: fixed;
   bottom: 20px;

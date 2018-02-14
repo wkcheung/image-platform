@@ -18,7 +18,13 @@ export default (state = defaultState, action) => {
         ...state,
         token: action.token || null,
         appLoaded: true,
-        currentUser: action.payload ? action.payload.user : null
+        currentUser: action.payload && action.payload.user ? {
+          email: action.payload.user.email,
+          emailVerified: action.payload.user.emailVerified,
+          photoURL: action.payload.user.photoURL,
+          creationTime: action.payload.user.creationTime,
+          lastSignInTime: action.payload.user.lastSignInTime
+        } : null
       };
     case REDIRECT:
       return { ...state,
@@ -29,8 +35,14 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         redirectTo: action.error ? null : '/',
-        token: action.error ? null : action.payload.user.token,
-        currentUser: action.error ? null : action.payload.user
+        token: action.error ? null : action.payload.refreshToken,
+        currentUser: action.error ? null : {
+          email: action.payload.user.email,
+          emailVerified: action.payload.user.emailVerified,
+          photoURL: action.payload.user.photoURL,
+          creationTime: action.payload.user.creationTime,
+          lastSignInTime: action.payload.user.lastSignInTime
+        }
       };
     case USER_SIGN_OUT:
       return { ...state,

@@ -9,12 +9,20 @@ import {
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
+    console.log("promiseMiddleware");
     store.dispatch({ type: ASYNC_START, subtype: action.type });
 
     action.payload.then(
       res => {
         console.log('RESULT', res);
-        action.payload = res;
+        switch (action.type) {
+          case USER_SIGN_UP:
+          case USER_SIGN_IN:
+            action.payload = { user: res };
+            break;
+          default:
+            action.payload = res;
+        }
         store.dispatch({ type: ASYNC_END, promise: action.payload });
         store.dispatch(action);
       },
@@ -35,9 +43,10 @@ const promiseMiddleware = store => next => action => {
 
 const sessionStorageMiddleware = store => next => action => {
   if (action.type === USER_SIGN_UP || action.type === USER_SIGN_IN) {
+    console.log("sessionStorageMiddleware");
     if (!action.error) {
-      window.sessionStorage.setItem('jwt', action.payload.user.token);
-      agent.setToken(action.payload.user.token);
+      window.sessionStorage.setItem('jwt', action.payload.refreshToken);
+      agent.setToken(action.payload.refreshToken);
     }
   } else if (action.type === USER_SIGN_OUT) {
     window.sessionStorage.setItem('jwt', '');

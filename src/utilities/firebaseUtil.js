@@ -17,12 +17,10 @@ export const providerFacebook = new firebase.auth.FacebookAuthProvider();
 
 
 const Auth = {
-  current: () => {
-    return null;
-  },
-  signIn: (email, password) => {
-    return null;
-  },
+  current: () =>
+    firebaseApp.auth().currentUser,
+  signIn: (email, password) =>
+    firebaseApp.auth().signInWithEmailAndPassword(email, password),
   signUp: (email, password) =>
     firebaseApp.auth().createUserWithEmailAndPassword(email, password),
   save: user => {

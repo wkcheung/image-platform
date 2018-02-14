@@ -7,27 +7,20 @@ import { Router, Route } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux';
 
 import App from './src/components/App';
+import { firebaseApp } from './src/utilities/firebaseUtil';
 
 import './lib/dropzonejs/dropzone.min.css';
 import './lib/semantic/dist/semantic.min.css';
 import './src/assets/css/global.css';
 
-// let store = createStore(todoApp)
-
-// render(
-  // <Provider store={store}>
-    // <App />
-  // </Provider>,
-  // document.getElementById('root')
-// )
-
-// ReactDOM.render((
-//   <ConnectedRouter history={ browserHistory }>
-//     <Switch>
-//       <Route path="/" component={ App } />
-//     </Switch>
-//   </ConnectedRouter>
-// ), document.getElementById('root'));
+firebaseApp.auth().onAuthStateChanged(user => {
+  console.log("onAuthStateChanged");
+  if(user) {
+      console.log(user);
+  } else {
+      console.log("no user");
+  }
+})
 
 ReactDOM.render((
   <Provider store={store}>

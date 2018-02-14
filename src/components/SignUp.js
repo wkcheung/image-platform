@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
-import { Button, Checkbox, Divider, Form, Grid, Header, Segment } from 'semantic-ui-react'
-import { USER_SIGN_UP } from '../constants/actionTypes'
+import { Link } from 'react-router-dom';
+import { Button, Checkbox, Divider, Form, Grid, Header, Segment } from 'semantic-ui-react';
+import firebaseUtil from '../utilities/firebaseUtil';
+import { USER_SIGN_UP } from '../constants/actionTypes';
 
 const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (email, password) => {
-    const payload = { user: {email: email, password: password, token: "ABC"} }; //tmp
-    dispatch({ type: USER_SIGN_UP, payload })
+    const payload = firebaseUtil.Auth.signUp(email, password);
+    dispatch({ type: USER_SIGN_UP, payload });
   }
 });
 
@@ -58,11 +59,11 @@ class SignUp extends Component {
                 Sign up
               </Button>
               <Divider horizontal>Or</Divider>
-              <Button basic color='teal' fluid>
-                <Link to="/sign-in">
-                  Already a member? Log in
-                </Link>
-              </Button>
+              <Link to="/sign-in">
+                <Button basic color='teal' fluid>
+                Already a member? Log in
+                </Button>
+              </Link>
             </Form>
           </Segment>
         </Grid.Column>

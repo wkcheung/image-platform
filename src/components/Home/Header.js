@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Input, Menu, Segment } from 'semantic-ui-react'
-import logo from '../assets/images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 
 class Header extends Component {
   render() {

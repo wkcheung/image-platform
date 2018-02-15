@@ -114,7 +114,7 @@ class SignUp extends Component {
             <Divider horizontal>Or</Divider>
             <Link to="/sign-in">
               <Button basic color='teal' fluid>
-              Already a member? Log in
+                Already a member? Log in
               </Button>
             </Link>
           </Form>

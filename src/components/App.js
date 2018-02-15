@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from './Header';
+import { Route, Switch } from 'react-router-dom';
+import Home from './Home/index';
 import SignUp from './SignUp';
-import UploadImage from './UploadImage';
 import { Button } from 'semantic-ui-react';
 import { agent } from '../agent';
 import { store } from '../store';
@@ -42,10 +42,8 @@ class App extends Component {
   render() {
     if (this.props.currentUser) {
       return (
-        <div>
-          <Header currentUser={this.props.currentUser} />
-          <UploadImage />
-        </div>
+        <Route exact path="/" component={Home}/>
+        <Route exact path="/sign-in" component={SignIn}/>
       );
     } else {
         return <SignUp />;

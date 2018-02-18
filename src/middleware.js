@@ -6,6 +6,7 @@ import {
   USER_SIGN_IN,
   USER_SIGN_OUT
 } from './constants/actionTypes';
+import firebaseUtil from './utilities/firebaseUtil';
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
@@ -18,7 +19,8 @@ const promiseMiddleware = store => next => action => {
         switch (action.type) {
           case USER_SIGN_UP:
           case USER_SIGN_IN:
-            action.payload = { user: res };
+            let _user = firebaseUtil.Auth.current();  // TODO
+            action.payload = { user: _user };
             break;
           default:
             action.payload = res;
@@ -42,11 +44,11 @@ const promiseMiddleware = store => next => action => {
 };
 
 const sessionStorageMiddleware = store => next => action => {
+  console.log("sessionStorageMiddleware");
   if (action.type === USER_SIGN_UP || action.type === USER_SIGN_IN) {
-    console.log("sessionStorageMiddleware");
     if (!action.error) {
-      window.sessionStorage.setItem('jwt', action.payload.refreshToken);
-      agent.setToken(action.payload.refreshToken);
+      window.sessionStorage.setItem('jwt', action.payload.user.refreshToken);
+      agent.setToken(action.payload.user.refreshToken);
     }
   } else if (action.type === USER_SIGN_OUT) {
     window.sessionStorage.setItem('jwt', '');

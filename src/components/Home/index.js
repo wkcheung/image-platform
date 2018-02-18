@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from './Header';
 import UploadImage from './UploadImage';
 
 const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,
-  token: state.common.token
+  token: state.common.token,
+  currentUser: state.common.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -23,3 +25,5 @@ class Home extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

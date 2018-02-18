@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Home from './Home/index';
 import SignUp from './SignUp';
+import SignIn from './SignIn';
 import { Button } from 'semantic-ui-react';
-import { agent } from '../agent';
+import agent from '../agent';
+import firebaseUtil from '../utilities/firebaseUtil';
 import { store } from '../store';
 import { push } from 'react-router-redux';
-import { REDIRECT } from '../constants/actionTypes';
+import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 
 const mapStateToProps = state => {
   return {
@@ -19,9 +21,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onRedirect: () => {
-    dispatch({ type: REDIRECT });
-  }
+  onLoad: (token) =>
+    dispatch({ type: APP_LOAD, token }),
+  onRedirect: () =>
+    dispatch({ type: REDIRECT })
 });
 
 class App extends Component {
@@ -37,17 +40,31 @@ class App extends Component {
     if (token) {
       agent.setToken(token);
     }
+    this.props.onLoad(token ? firebaseUtil.Auth.current() : null, token);
   }
 
   render() {
-    if (this.props.currentUser) {
-      return (
-        <Route exact path="/" component={Home}/>
-        <Route exact path="/sign-in" component={SignIn}/>
-      );
-    } else {
-        return <SignUp />;
+    if (this.props.appLoaded) {
+      if (this.props.currentUser) {
+        console.log("in App: Has currentUser");
+        return (
+          <div>
+            <Route path="/" component={Home}/>
+          </div>
+        );
+      } else {
+        console.log("in App: No currentUser");
+        return (
+          <div>
+            <Route path="/" component={SignUp}/>
+            <Route path="/sign-in" component={SignIn}/>
+          </div>
+        );
+      }
     }
+    return (
+      <div></div>
+    );
   }
 }
 

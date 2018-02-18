@@ -1,46 +1,105 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Checkbox, Divider, Form, Grid, Header, Segment } from 'semantic-ui-react';
-import { ASYNC_START, ASYNC_END, USER_SIGN_IN } from '../constants/actionTypes';
-import { firebaseApp } from '../utilities/firebaseUtil';
+import { Button, Checkbox, Divider, Form, Header, Popup, Segment } from 'semantic-ui-react';
+import firebaseUtil from '../utilities/firebaseUtil';
+import { USER_SIGN_IN } from '../constants/actionTypes';
 
+
+const popupTimeoutLength = 10000;
+const EMAIL_FIELD = 'EMAIL_FIELD';
+const PASSWORD_FIELD = 'PASSWORD_FIELD';
+
+const mapStateToProps = state => ({ ...state.auth });
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (email, password) => {
+    const payload = firebaseUtil.Auth.signIn(email, password);
+    dispatch({ type: USER_SIGN_IN, payload });
+  }
+});
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: ''
-    };
-    this.submitForm = () => {
-      const { email, password } = this.state;
-      this.props.onSubmit(email, password);
-    }
+  constructor (props) {
+      super(props);
+      this.state = {
+          email: '',
+          password: '',
+          isEmailPopupOpen: false,
+          isPasswordPopupOpen: false
+      };
+      this.handleOpenPopup = field => {
+        this.timeout = setTimeout(() => {
+          switch (field) {
+            case EMAIL_FIELD:
+              this.setState({ isEmailPopupOpen: false })
+              break;
+            case PASSWORD_FIELD:
+              this.setState({ isPasswordPopupOpen: false })
+              break;
+          }
+        }, popupTimeoutLength)
+      }
+      this.submitForm = () => {
+        if (!this.state.email) {
+          this.setState({ isEmailPopupOpen: true })
+        } else if (!this.state.password) {
+          this.setState({ isPasswordPopupOpen: true })
+        } else {
+          const { email, password } = this.state;
+          this.props.onSubmit(email, password);
+        }
+      }
   }
+
   render() {
     return (
-      <Grid centered columns={3}>
-        <Grid.Column>
-          <Segment padded>
-            <Form>
-              <Header textAlign='center' as='h2'>Log In</Header>
-              <Divider section />
-              <Form.Field>
-                <label>Email</label>
-                <input placeholder='Email' />
-              </Form.Field>
-              <Form.Field>
-                <label>Password</label>
-                <input type='password' placeholder='Password' />
-              </Form.Field>
-              <Button color='teal' fluid type='submit'>Log in</Button>
-              <Divider horizontal>Or</Divider>
-              <Button basic color='teal' fluid>Sign Up Now</Button>
-            </Form>
-          </Segment>
-        </Grid.Column>
-      </Grid>
+      <div className='fixed-center'>
+        <Segment className='sign-in-sign-up-segment' padded>
+          <Form onSubmit={this.submitForm} >
+            <Header className='padding-t-4' textAlign='center' as='h2'>Sign In</Header>
+            <Divider section />
+            <Form.Field>
+              <Popup
+                trigger={<label>Email</label>}
+                position='top left'
+                content="This is a required field!"
+                open={this.state.isEmailPopupOpen}
+                onOpen={this.handleOpenPopup(EMAIL_FIELD)}
+              />
+              <input
+                placeholder='Email'
+                onChange = {(event) => this.setState({email: event.target.value})}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Popup
+                trigger={<label>Password</label>}
+                position='top left'
+                content="This is a required field!"
+                open={this.state.isPasswordPopupOpen}
+                onOpen={this.handleOpenPopup(PASSWORD_FIELD)}
+              />
+              <input
+                type='password'
+                placeholder='Password'
+                onChange = {(event) => this.setState({password: event.target.value})}
+              />
+            </Form.Field>
+            <Button color='teal' fluid type='submit'
+              disabled={ this.props.inProgress } >
+              Sign in
+            </Button>
+            <Divider horizontal>Or</Divider>
+            <Link to="/">
+              <Button basic color='teal' fluid>
+                Not a member? Sign up
+              </Button>
+            </Link>
+          </Form>
+        </Segment>
+      </div>
+
     );
   }
 }

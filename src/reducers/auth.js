@@ -9,11 +9,24 @@ export default (state = {}, action) => {
   switch (action.type) {
     case USER_SIGN_UP:
     case USER_SIGN_IN:
-      return {
-        ...state,
-        inProgress: false,
-        errors: action.error ? action.payload.errors : null
-      };
+      if (action.error) {
+        return {
+          ...state,
+          inProgress: false,
+          errors: action.payload.errors
+        };
+      } else {
+        return {
+          ...state,
+          inProgress: false,
+          errors: null,
+          email: action.payload.user.email,
+          emailVerified: action.payload.user.emailVerified,
+          photoURL: action.payload.user.photoURL,
+          creationTime: action.payload.user.creationTime,
+          lastSignInTime: action.payload.user.lastSignInTime
+          };
+      }
     case ASYNC_START:
       if (action.subtype === USER_SIGN_IN || action.subtype === USER_SIGN_UP) {
         return { ...state, inProgress: true };

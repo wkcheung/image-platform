@@ -43,15 +43,15 @@ const promiseMiddleware = store => next => action => {
   next(action);
 };
 
-const sessionStorageMiddleware = store => next => action => {
-  console.log("sessionStorageMiddleware");
+const localStorageMiddleware = store => next => action => {
+  console.log("localStorageMiddleware");
   if (action.type === USER_SIGN_UP || action.type === USER_SIGN_IN) {
     if (!action.error) {
-      window.sessionStorage.setItem('jwt', action.payload.user.refreshToken);
+      window.localStorage.setItem('jwt', action.payload.user.refreshToken);
       agent.setToken(action.payload.user.refreshToken);
     }
   } else if (action.type === USER_SIGN_OUT) {
-    window.sessionStorage.setItem('jwt', '');
+    window.localStorage.setItem('jwt', '');
     agent.setToken(null);
   }
 
@@ -63,4 +63,4 @@ function isPromise(v) {
 }
 
 
-export { promiseMiddleware, sessionStorageMiddleware }
+export { promiseMiddleware, localStorageMiddleware }

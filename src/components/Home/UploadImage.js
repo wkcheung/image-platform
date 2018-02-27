@@ -23,7 +23,7 @@ const UploadImageForm = props => {
       <Grid columns={2} divided>
         <Grid.Row>
           <Grid.Column>
-			
+
           </Grid.Column>
           <Grid.Column>
             <Form.Field>
@@ -69,7 +69,7 @@ const UploadImageModal = props => {
 
 const UploadButton = props => {
   return (
-    <Button {...props} circular className="upload-button" size='big' color='teal' icon='plus' />
+    <Button {...props} circular id="upload-button" size='huge' color='teal' icon='plus' />
   );
 }
 

@@ -23,6 +23,8 @@ const Auth = {
     firebaseApp.auth().signInWithEmailAndPassword(email, password),
   signUp: (email, password) =>
     firebaseApp.auth().createUserWithEmailAndPassword(email, password),
+  signOut: () =>
+    firebaseApp.auth().signOut(),
   save: user => {
     return null;
   },

@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
 import reducer from './reducer';
-import { promiseMiddleware, sessionStorageMiddleware } from './middleware';
+import { promiseMiddleware, localStorageMiddleware } from './middleware';
 
 import logger from 'redux-logger'
 
@@ -10,4 +10,6 @@ import createBrowserHistory from 'history/createBrowserHistory';
 export const browserHistory = createBrowserHistory();
 
 export const store = createStore(
-  reducer, applyMiddleware(promiseMiddleware, sessionStorageMiddleware, logger));
+  reducer,
+  applyMiddleware(promiseMiddleware, localStorageMiddleware, routerMiddleware(browserHistory), logger)
+);

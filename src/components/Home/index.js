@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
 import UploadImage from './UploadImage';
+import ImageBoard from '../Image/ImageBoard';
 
 const mapStateToProps = state => ({
   ...state.home,
@@ -21,6 +22,7 @@ class Home extends React.Component {
       <div>
         <Header currentUser={this.props.currentUser} />
         <UploadImage />
+        <ImageBoard />
       </div>
     )
   }

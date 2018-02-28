@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 import { Icon, Input, Menu, Segment } from 'semantic-ui-react'
 import logo from '../../assets/images/logo.svg';
 import { USER_SIGN_OUT } from '../../constants/actionTypes';
+import firebaseUtil from '../../utilities/firebaseUtil';
 
 const mapStateToProps = state => ({
   currentUser: state.common.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickSignOut: () => dispatch({ type: USER_SIGN_OUT })
+  onClickSignOut: () => {
+    const payload = firebaseUtil.Auth.signOut();
+    dispatch({ type: USER_SIGN_OUT });
+  }
 });
 
 class Header extends Component {

@@ -6,6 +6,15 @@
   padding-bottom: 4px !important;
 }
 
+.fixed-top {
+  position: fixed;
+  top: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .fixed-center {
   left: 50%;
   top: 50%;
@@ -35,7 +44,7 @@
   max-height: 800px;
   width: 420px;
   padding: 10px 10px 10px 10px;
-  
+
   transition: -webkit-transform .2s;
   -webkit-transition: -webkit-transform .2s;
   transition: transform .2s;

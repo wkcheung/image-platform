@@ -28,28 +28,33 @@ class SignIn extends Component {
           isEmailPopupOpen: false,
           isPasswordPopupOpen: false
       };
-      this.handleOpenPopup = field => {
-        this.timeout = setTimeout(() => {
-          switch (field) {
-            case EMAIL_FIELD:
-              this.setState({ isEmailPopupOpen: false })
-              break;
-            case PASSWORD_FIELD:
-              this.setState({ isPasswordPopupOpen: false })
-              break;
-          }
-        }, popupTimeoutLength)
+
+      this.handleOpenPopup = this.handleOpenPopup.bind(this);
+      this.submitForm = this.submitForm.bind(this);
+  }
+
+  handleOpenPopup(field) {
+    this.timeout = setTimeout(() => {
+      switch (field) {
+        case EMAIL_FIELD:
+          this.setState({ isEmailPopupOpen: false })
+          break;
+        case PASSWORD_FIELD:
+          this.setState({ isPasswordPopupOpen: false })
+          break;
       }
-      this.submitForm = () => {
-        if (!this.state.email) {
-          this.setState({ isEmailPopupOpen: true })
-        } else if (!this.state.password) {
-          this.setState({ isPasswordPopupOpen: true })
-        } else {
-          const { email, password } = this.state;
-          this.props.onSubmit(email, password);
-        }
-      }
+    }, popupTimeoutLength)
+  }
+
+  submitForm() {
+    if (!this.state.email) {
+      this.setState({ isEmailPopupOpen: true })
+    } else if (!this.state.password) {
+      this.setState({ isPasswordPopupOpen: true })
+    } else {
+      const { email, password } = this.state;
+      this.props.onSubmit(email, password);
+    }
   }
 
   render() {
@@ -65,7 +70,7 @@ class SignIn extends Component {
                 position='top left'
                 content="This is a required field!"
                 open={this.state.isEmailPopupOpen}
-                onOpen={this.handleOpenPopup(EMAIL_FIELD)}
+                onOpen={(EMAIL_FIELD) => this.handleOpenPopup(EMAIL_FIELD)}
               />
               <input
                 placeholder='Email'
@@ -78,7 +83,7 @@ class SignIn extends Component {
                 position='top left'
                 content="This is a required field!"
                 open={this.state.isPasswordPopupOpen}
-                onOpen={this.handleOpenPopup(PASSWORD_FIELD)}
+                onOpen={(PASSWORD_FIELD) => this.handleOpenPopup(PASSWORD_FIELD)}
               />
               <input
                 type='password'

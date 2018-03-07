@@ -30,33 +30,35 @@ class SignUp extends Component {
           isPasswordPopupOpen: false,
           isAgreeToTermsPopupOpen: false
       };
-      this.handleOpenPopup = field => {
-        this.timeout = setTimeout(() => {
-          switch (field) {
-            case EMAIL_FIELD:
-              this.setState({ isEmailPopupOpen: false })
-              break;
-            case PASSWORD_FIELD:
-              this.setState({ isPasswordPopupOpen: false })
-              break;
-            case AGREE_TO_TERMS_FIELD:
-              this.setState({ isAgreeToTermsPopupOpen: false })
-              break;
-          }
-        }, popupTimeoutLength)
+  }
+
+  handleOpenPopup(field) {
+    this.timeout = setTimeout(() => {
+      switch (field) {
+        case EMAIL_FIELD:
+          this.setState({ isEmailPopupOpen: false })
+          break;
+        case PASSWORD_FIELD:
+          this.setState({ isPasswordPopupOpen: false })
+          break;
+        case AGREE_TO_TERMS_FIELD:
+          this.setState({ isAgreeToTermsPopupOpen: false })
+          break;
       }
-      this.submitForm = () => {
-        if (!this.state.email) {
-          this.setState({ isEmailPopupOpen: true })
-        } else if (!this.state.password) {
-          this.setState({ isPasswordPopupOpen: true })
-        } else if (!this.state.agreeToTerms) {
-          this.setState({ isAgreeToTermsPopupOpen: true })
-        } else {
-          const { email, password } = this.state;
-          this.props.onSubmit(email, password);
-        }
-      }
+    }, popupTimeoutLength)
+  }
+
+  submitForm() {
+    if (!this.state.email) {
+      this.setState({ isEmailPopupOpen: true })
+    } else if (!this.state.password) {
+      this.setState({ isPasswordPopupOpen: true })
+    } else if (!this.state.agreeToTerms) {
+      this.setState({ isAgreeToTermsPopupOpen: true })
+    } else {
+      const { email, password } = this.state;
+      this.props.onSubmit(email, password);
+    }
   }
 
   render() {
@@ -72,7 +74,7 @@ class SignUp extends Component {
                 position='top left'
                 content="This is a required field!"
                 open={this.state.isEmailPopupOpen}
-                onOpen={this.handleOpenPopup(EMAIL_FIELD)}
+                onOpen={(EMAIL_FIELD) => this.handleOpenPopup(EMAIL_FIELD)}
               />
               <input
                 placeholder='Email'
@@ -85,7 +87,7 @@ class SignUp extends Component {
                 position='top left'
                 content="This is a required field!"
                 open={this.state.isPasswordPopupOpen}
-                onOpen={this.handleOpenPopup(PASSWORD_FIELD)}
+                onOpen={(PASSWORD_FIELD) => this.handleOpenPopup(PASSWORD_FIELD)}
               />
               <input
                 type='password'
@@ -104,7 +106,7 @@ class SignUp extends Component {
                 position='top right'
                 content="Please agree to the Terms and Conditions"
                 open={this.state.isAgreeToTermsPopupOpen}
-                onOpen={this.handleOpenPopup(AGREE_TO_TERMS_FIELD)}
+                onOpen={(AGREE_TO_TERMS_FIELD) => this.handleOpenPopup(AGREE_TO_TERMS_FIELD)}
               />
             </Form.Field>
             <Button color='teal' fluid type='submit'

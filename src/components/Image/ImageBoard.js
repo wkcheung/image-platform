@@ -6,6 +6,8 @@ import {
   createMasonryCellPositioner,
   Masonry
 } from 'react-virtualized';
+import * as Constants from '../../constants/constants';
+
 
 // Array of images with captions
 const imageList = [
@@ -22,17 +24,17 @@ const imageList = [
 
 // Default sizes help Masonry decide how many images to batch-measure
 const cache = new CellMeasurerCache({
-  defaultHeight: 620,
-  defaultWidth: 400,
+  defaultHeight: Constants.IMAGE_CARD_CELL_MAX_HEIGHT,
+  defaultWidth: Constants.IMAGE_CARD_CELL_WIDTH,
   fixedWidth: true
 })
 
 // Our masonry layout will use 3 columns with a 10px gutter between
 const cellPositioner = createMasonryCellPositioner({
   cellMeasurerCache: cache,
-  columnCount: 3,
-  columnWidth: 400,
-  spacer: 10
+  columnCount: Constants.IMAGE_BOARD_COLUMN_COUNT,
+  columnWidth: Constants.IMAGE_CARD_CELL_WIDTH,
+  spacer: Constants.IMAGE_BOARD_CONTAINER_SPACER
 })
 
 function cellRenderer ({ index, key, parent, style }) {
@@ -59,8 +61,8 @@ class ImageBoard extends Component {
           cellMeasurerCache={cache}
           cellPositioner={cellPositioner}
           cellRenderer={cellRenderer}
-          height={1000}
-          width={1000}
+          height={Constants.IMAGE_BOARD_CONTAINER_HEIGHT}
+          width={Constants.IMAGE_BOARD_CONTAINER_WIDTH}
         />
         <ImageCard src={imageList[0].source} />
       </div>

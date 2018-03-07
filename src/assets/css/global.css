@@ -35,6 +35,7 @@
   max-height: 800px;
   width: 420px;
   padding: 10px 10px 10px 10px;
+  
   transition: -webkit-transform .2s;
   -webkit-transition: -webkit-transform .2s;
   transition: transform .2s;
